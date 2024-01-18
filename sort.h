@@ -22,13 +22,16 @@ typedef struct listint_s
 } listint_t;
 
 /*function prototype*/
+void print_array(const int *array, size_t size);
+void print_list(const listint_t *list);
+void bubble_sort(int *array, size_t size);
+void insertion_sort_list(listint_t **list);
+
+void print_array2(const int *array, size_t start, size_t end);
 void caller(int *array, int start, int end, size_t size);
 int partition(int *array, int start, int end, size_t size);
 void swap(int *low, int *high);
-void print_array2(const int *array, size_t start, size_t end);
 
-void print_array(const int *array, size_t size);
-void print_list(const listint_t *list);
 void bubble_sort(int *array, size_t size);
 void insertion_sort_list(listint_t **list);
 void selection_sort(int *array, size_t size);

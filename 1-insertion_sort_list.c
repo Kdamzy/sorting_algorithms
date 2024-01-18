@@ -1,51 +1,43 @@
 #include "sort.h"
 
 /**
- * insertion_sort_list - Sorts a doubly linked list of
- * integers in ascending order using the Insertion Sort algorithm.
- * @list: A double pointer to the head of the doubly linked list.
+ * insertion_sort_list - Sorts a doubly linked list 
+ * @list: pointer to the head of the list.
  */
 
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *one, *two, *marker = NULL;
+	listint_t *node, *element, *last;
 
-	if (list == NULL || (*list) == NULL || !(*list)->next)
-	{
-		return;
-	}
+    if (list == NULL || *list == NULL || (*list)->next == NULL)
+        return;
 
-	one = *list;
-	two = one->next;
+    node = (*list)->next;
 
-	while (two)
-	{
-		marker = two;
-		if (two->n < one->n)
-		{
-			marker = one;
-			while (two->n < one->n)
-			{
-				two->prev = one->prev;
-				one->next = two->next;
-				two->next = one;
-				one->prev = two;
-				if (one->next)
-					one->next->prev = one;
-				if (two->prev)
-					two->prev->next = two;
-				else
-				{
-					*list = two;
-					print_list(*list);
-					break;
-				}
-				print_list(*list);
-				one = two->prev;
-			}
-		}
-		one = marker;
-		two = marker->next;
+    while (node != NULL)
+    {
+        element = node;
 
-	}
+        while (element->prev != NULL && element->prev->n > element->n)
+        {
+            last = element->prev;
+
+            last->next = element->next;
+            if (element->next)
+                element->next->prev = last;
+
+            element->next = last;
+            element->prev = last->prev;
+            last->prev = element;
+
+            if (element->prev)
+                element->prev->next = element;
+            else
+                *list = element;
+
+            print_list(*list);
+        }
+
+        node = node->next;
+    }
 }

@@ -2,37 +2,44 @@
 
 /**
  * selection_sort - Sorts an array of integers in
- * ascending order using the Selection Sort algorithm.
+ * ascending order
  * @array: The array to be sorted.
  * @size: The size of the array.
  */
 
 void selection_sort(int *array, size_t size)
 {
-	size_t cycle, positn;
-	int small, tmporal;
+	size_t a, num;
+    int index, temp;
 
-	if (size < 2)
-	{
-		return;
-	}
+    if (size < 2)
+    {
+        return;
+    }
 
-	for (cycle = 0; cycle < size - 1; cycle++)
-	{
+    a = 0;
 
-		for (positn = cycle + 1, small = cycle; positn < size; positn++)
-		{
-			if (array[positn] < array[small])
-				small = positn;
+    while (a < size - 1)
+    {
+        num = a + 1;
+        index = a;
 
-		}
+        while (num < size)
+        {
+            if (array[num] < array[index])
+                index = num;
 
-		if (array[cycle] != array[small])
-		{
-			tmporal = array[cycle];
-			array[cycle] = array[small];
-			array[small] = tmporal;
-			print_array(array, size);
-		}
-	}
+            num++;
+        }
+
+        if (array[a] != array[index])
+        {
+            temp = array[a];
+            array[a] = array[index];
+            array[index] = temp;
+            print_array(array, size);
+        }
+
+        a++;
+    }
 }

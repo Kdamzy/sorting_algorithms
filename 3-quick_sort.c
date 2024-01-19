@@ -1,10 +1,9 @@
 #include "sort.h"
 
 /**
- * quick_sort - Sorts an array of integers in ascending
- * order using the Quick Sort algorithm.
- * @array: The array to be sorted.
- * @size: The size of the array.
+ * quick_sort - Sorts an array of integers in ascending order
+ * @array: array to be sorted.
+ * @size: size of the array.
  */
 
 void quick_sort(int *array, size_t size)
@@ -13,87 +12,80 @@ void quick_sort(int *array, size_t size)
 	if (size < 2)
 		return;
 
-	caller(array, 0, size - 1, size);
+	recuss_sort(array, 0, size - 1, size);
+}
+
+
+/**
+ * int_swap - Swaps two elements in an array.
+ * @m: first int to be swapped.
+ * @n: second int to be swapped.
+ */
+
+void int_swap(int *m, int *n)
+{
+	int temp;
+
+	temp = *m;
+	*m = *n;
+	*n = temp;
 }
 
 /**
- * caller - Recursively calls the partition function
- * to perform quick sort.
+ * partition - partitions an array
  * @array: The array to be sorted.
- * @start: The starting index of the current partition.
- * @end: The ending index of the current partition.
+ * @first: The first element
+ * @last: The last elment
  * @size: The size of the array.
+ * Return: The index of the pivot element.
  */
 
-void caller(int *array, int start, int end, size_t size)
+int partition(int *array, int first, int last, size_t size)
 {
+    int pivot = array[last];
+    int begin = first - 1;
+	int c;
 
-	int pivot;
+    for (c = first; c < last; c++)
+    {
+        if (array[c] <= pivot)
+        {
+            begin++;
+            if (c != begin)
+            {
+        		int_swap(&array[begin], &array[c]);
+                print_array(array, size);
+            }
+        }
+    }
 
-	if (start < end)
-	{
-		pivot = partition(array, start, end, size);
-		caller(array, start, pivot - 1, size);
-		caller(array, pivot + 1, end, size);
+    begin++;
+    int_swap(&array[begin], &array[last]);
+    print_array(array, size);
 
-	}
-
-
+    return (begin);
 }
 
+
 /**
- * partition - Chooses a pivot and partitions the array
- * into two sub-arrays.
+ * recuss_sort - Recursively 
  * @array: The array to be sorted.
- * @start: The starting index of the current partition.
- * @end: The ending index of the current partition.
+ * @small: the smallest value of the array.
+ * @big: The biggest value of the array.
  * @size: The size of the array.
- * Return: The index of the pivot element after partitioning.
+ * Return: void
  */
 
-int partition(int *array, int start, int end, size_t size)
+void recuss_sort(int *array, int small, int big, size_t size)
 {
-	int check = start;
-	int low = start - 1;
-	int pivot = array[end];
 
-	while (check < end)
+	int start;
+
+	if (small < big)
 	{
-		if (array[check] <= pivot)
-		{
-			low++;
-			if (check != low)
-			{
-				swap(&array[low], &array[check]);
-				print_array(array, size);
-			}
-		}
+		start = partition(array, small, big, size);
+		recuss_sort(array, small, start - 1, size);
+		recuss_sort(array, start + 1, big, size);
 
-		check++;
 	}
-	low++;
-	if (end != low)
-	{
-		swap(&array[low], &array[end]);
-		print_array(array, size);
-	}
-	return (low);
 }
-
-/**
- * swap - Swaps two elements in an array.
- * @low: The first element to be swapped.
- * @high: The second element to be swapped.
- */
-
-void swap(int *low, int *high)
-{
-	int tmporal;
-
-	tmporal = *low;
-	*low = *high;
-	*high = tmporal;
-}
-
-
-

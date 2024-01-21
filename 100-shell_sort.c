@@ -1,65 +1,50 @@
 #include "sort.h"
-
 /**
- * swap - Swaps two elements in an array.
- * @x: The first element to be swapped.
- * @y: The second element to be swapped.
- */
-
-void swap(int *x, int *y)
-{
-	int tmporal;
-
-	tmporal = *x;
-	*x = *y;
-	*y = tmporal;
-}
-
-/**
- * shell_sort - Sorts an array of integers in
- * ascending order using the Shell Sort algorithm.
+ * shell_sort - Sorts an array of integers 
  * @array: The array to be sorted.
  * @size: The size of the array.
  */
 
 void shell_sort(int *array, size_t size)
 {
-	size_t jaii, aii;
-	size_t gap = 1;
+	size_t i, j, gap = 1;
 
-	if (array == NULL)
-	{
+	if (array == NULL || size < 2)
 		return;
-	}
-
-	if (size < 2)
-	{
-		return;
-	}
 
 	while (gap <= size / 3)
 		gap = gap * 3 + 1;
 
 	while (gap >= 1)
 	{
-		for (aii = 0; aii < gap; aii++)
+		for (i = 0; i < gap; i++)
 		{
-			for (jaii = aii; jaii < size - gap; jaii += gap)
+			for (j = i; j < size - gap; j += gap)
 			{
-				while (array[jaii] > array[jaii + gap])
+				while (j >= gap && array[j - gap] > array[j])
 				{
-					swap(&array[jaii], &array[jaii + gap]);
-
-					if (jaii >= gap)
-						jaii = jaii - gap;
-					else
-					{
-						break;
-					}
+					int_swap(&array[j - gap], &array[j]);
+					j -= gap;
 				}
 			}
 		}
+
 		gap = (gap - 1) / 3;
 		print_array(array, size);
 	}
+}
+
+/**
+ * int_swap - Swaps two elements in an array.
+ * @m: first int to be swapped.
+ * @n: second int to be swapped.
+ */
+
+void int_swap(int *m, int *n)
+{
+	int temp;
+
+	temp = *m;
+	*m = *n;
+	*n = temp;
 }

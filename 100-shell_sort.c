@@ -8,26 +8,26 @@
 void shell_sort(int *array, size_t size)
 {
 	size_t i, j, gap = 1;
+	int temp;
 
 	if (array == NULL || size < 2)
 		return;
 
 	while (gap <= size / 3)
-		gap = gap * 3 + 1;
+		gap = 3 * gap  + 1;
 
 	while (gap >= 1)
 	{
-		for (i = 0; i < gap; i++)
+		for (i = gap; i < size; i++)
 		{
-			for (j = i; j < size - gap; j += gap)
-			{
-				while (j >= gap && array[j - gap] > array[j])
-				{
-					int_swap(&array[j - gap], &array[j]);
-					j -= gap;
-				}
-			}
-		}
+			temp = array[i];
+			for (j = i; j >= gap && array[j - gap] > temp; j -= gap)
+            {
+                array[j] = array[j - gap];
+            }
+            array[j] = temp;
+        }
+	
 
 		gap = (gap - 1) / 3;
 		print_array(array, size);

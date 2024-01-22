@@ -1,86 +1,61 @@
 #include "sort.h"
 
 /**
- * largest - find largest number in array
- * @array: int *
- * @size: size_t
+ * counting_sort - sorts an array of integers in ascending order
+ * using the Counting sort algorithm
+ * @array: array to be sorted
+ * @size: size of array to be sorted
  * Return: always 0
  */
-
-int largest(int *array, size_t size)
-{
-	size_t aii;
-	int largest = array[0];
-
-	for (aii = 1; aii < size; aii++)
-	{
-		if (array[aii] > largest)
-			largest = array[aii];
-	}
-	return (largest);
-}
-
-
-/**
- * swap- swap two elements in array
- * @low: int
- * @high: int
- * Return: always 0
- */
-
-
-void swap(int *low, int *high)
-{
-	int tmporal;
-
-	tmporal = *low;
-	*low = *high;
-	*high = tmporal;
-}
-
-/**
- * counting_sort - sort via counting method
- * @array: int*
- * @size: size_t
- * Return: always 0
- */
-
 void counting_sort(int *array, size_t size)
 {
-	int *counter, *fresh;
-	size_t i, kaii;
+	int *count, *copy;
+	size_t i, j;
 
 	if (!array || size < 2)
 		return;
 
-	kaii = largest((array), size);
+	/* Find the largest element in the array */
+	for (i = 1, j = array[0]; i < size; i++)
+	{
+		if ((size_t)array[i] > j)
+			j = array[i];
+	}
 
-	counter = malloc((kaii + 1) * sizeof(int));
-	if (counter == NULL)
+	count = malloc((j + 1) * sizeof(int));
+	if (count == NULL)
 		return;
-	fresh = malloc(size * sizeof(int));
 
-	for (i = 0; i < kaii + 1; i++)
-		counter[i] = 0;
+	copy = malloc(size * sizeof(int));
+	if (copy == NULL)
+	{
+		free(count);
+		return;
+	}
+		
+	for (i = 0; i < j + 1; i++)
+		count[i] = 0;
 
 	for (i = 0; i < size; i++)
-		counter[array[i]]++;
+		count[array[i]]++;
 
-	for (i = 1; i < kaii + 1; i++)
-		counter[i] = counter[i] + counter[i - 1];
+	for (i = 1; i < j + 1; i++)
+		count[i] = count[i] + count[i - 1];
 
-	print_array(counter, kaii + 1);
+	print_array(count, j + 1);
 
 	for (i = 0; i < size; i++)
 	{
-		fresh[counter[array[i]] - 1] = array[i];
-		counter[array[i]]--;
+		copy[i] = array[i];
 	}
 
 	for (i = 0; i < size; i++)
 	{
-		array[i] = fresh[i];
+		copy[count[copy[i]] - 1] = copy[i];
+		count[copy[i]]--;
 	}
-	free(fresh);
-	free(counter);
+
+
+	free(copy);
+	free(count);
 }

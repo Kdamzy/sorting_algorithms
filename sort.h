@@ -41,7 +41,8 @@ void heap_sort(int *array, size_t size);
 int find_largest(int *array, size_t size);
 void radix_sort(int *array, size_t size);
 void merge_sort(int *array, size_t size);
-
+void bitonic(int *array, int begin, int size, int new);
+void bitonic_merge(int *array, int begin, int size, int new);
 void insertion_sort_list(listint_t **list);
 void quick_sort_hoare(int *array, size_t size);
 void bitonic_sort(int *array, size_t size);

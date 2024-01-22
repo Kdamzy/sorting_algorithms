@@ -44,7 +44,7 @@ void bitonic(int *array, int begin, int size, int new)
 
 		int s = size / 2;
 
-		printf("Merging [%d/%d] ", size, size * 2);
+		printf("Merging [%d/%d] ", size, size);
 		printf((new == 1) ? "(UP):\n" : "(DOWN):\n");
 		print_array(array, size);
 
@@ -82,7 +82,7 @@ void bitonic_merge(int *array, int begin, int size, int new)
 		{
 
 			if ((new == 1 && array[begin + i] > array[begin + i + s]) || (new == -1 && array[begin + i] < array[i + s]))
-                int_swap(&array[begin + i], &array[begin + i + s]);
+				int_swap(&array[begin + i], &array[begin + i + s]);
 
 			i++;
 

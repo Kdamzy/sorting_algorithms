@@ -14,7 +14,6 @@ void counting_sort(int *array, size_t size)
 
 	if (!array || size < 2)
 		return;
-
 	/* Find the largest element in the array */
 	for (i = 1, j = array[0]; i < size; i++)
 	{
@@ -32,30 +31,20 @@ void counting_sort(int *array, size_t size)
 		free(count);
 		return;
 	}
-		
 	for (i = 0; i < j + 1; i++)
 		count[i] = 0;
-
 	for (i = 0; i < size; i++)
 		count[array[i]]++;
-
 	for (i = 1; i < j + 1; i++)
 		count[i] = count[i] + count[i - 1];
-
 	print_array(count, j + 1);
-
-	for (i = 0; i < size; i++)
+	for (i = size - 1; i != (size_t)-1; i--)
 	{
+		copy[count[array[i]] - 1] = array[i];
+		count[array[i]]--;
+	}
+	for (i = 0; i < size; i++)
 		copy[i] = array[i];
-	}
-
-	for (i = 0; i < size; i++)
-	{
-		copy[count[copy[i]] - 1] = copy[i];
-		count[copy[i]]--;
-	}
-
-
 	free(copy);
 	free(count);
 }

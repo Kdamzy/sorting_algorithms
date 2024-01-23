@@ -16,8 +16,8 @@ void int_swap(int *m, int *n)
 
 /**
  * quick_sort_hoare- sorting via quick sort method
- * @array: int
- * @size: size_t
+ * @array: the array of the integer
+ * @size: size of the integer
  * Return: always 0
  */
 
@@ -30,11 +30,11 @@ void quick_sort_hoare(int *array, size_t size)
 }
 
 /**
- * hoare_partition- partition function to sort using quicksort
- * @array: int
- * @start: int
- * @end: int
- * @size: size_t
+ * hoare_partition- partition function
+ * @array: array of the integer
+ * @start: the first integer
+ * @end: the last integer
+ * @size: sizee of the array
  * Return: int
  */
 
@@ -71,11 +71,11 @@ int hoare_partition(int *array, int start, int end, int size)
 }
 
 /**
- * hoare_sort- using this function recursively to call partitioner
- * @array: int
- * @start: int
- * @end: int
- * @size: size_t
+ * hoare_sort- hoarse_sort function
+ * @array: array of the integer
+ * @start: the first integer
+ * @end: the last integer
+ * @size: sizee of the array
  * Return: always 0
  */
 

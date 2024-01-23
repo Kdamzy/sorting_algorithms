@@ -1,7 +1,18 @@
 #include "sort.h"
+/**
+ * int_swap - Swaps two elements in an array.
+ * @m: first int to be swapped.
+ * @n: second int to be swapped.
+ */
 
-void hoare_caller(int *array, int start, int end, size_t size);
-int hoare_partition(int *array, int start, int end, size_t size);
+void int_swap(int *m, int *n)
+{
+	int temp;
+
+	temp = *m;
+	*m = *n;
+	*n = temp;
+}
 
 /**
  * quick_sort_hoare- sorting via quick sort method
@@ -12,35 +23,10 @@ int hoare_partition(int *array, int start, int end, size_t size);
 
 void quick_sort_hoare(int *array, size_t size)
 {
-	if (size < 2)
+	if (!array || size < 2)
 		return;
 
-	hoare_caller(array, 0, size - 1, size);
-}
-
-/**
- * hoare_caller- using this function recursively to call partitioner
- * @array: int
- * @start: int
- * @end: int
- * @size: size_t
- * Return: always 0
- */
-
-void hoare_caller(int *array, int start, int end, size_t size)
-{
-
-	int pivot;
-
-	if (start < end)
-	{
-		pivot = hoare_partition(array, start, end, size);
-		hoare_caller(array, start, pivot - 1, size);
-		hoare_caller(array, pivot, end, size);
-
-	}
-
-
+	hoare_sort(array, 0, size - 1, size);
 }
 
 /**
@@ -52,51 +38,59 @@ void hoare_caller(int *array, int start, int end, size_t size)
  * Return: int
  */
 
-int hoare_partition(int *array, int start, int end, size_t size)
+int hoare_partition(int *array, int start, int end, int size)
 {
-	int pivot = array[end];
-	int check = start - 1;
-	int other = end + 1;
+	int present = start - 1, pivot = array[end];
+	int prev = end + 1;
 
 
-	while (check < other)
+	while (present < prev)
 	{
-		do {
-			check++;
-		} while (array[check] < pivot);
+		do
+		{
+			present++;
+		}
+		while (array[present] < pivot);
 
-		do {
-			other--;
-		} while (array[other] > pivot);
+		do
+		{
+			prev--;
+		}
+		while (array[prev] > pivot);
 
-		if (other > check)
+		if (prev > present)
 		{
 
-			swap(&array[check], &array[other]);
+			int_swap(&array[present], &array[prev]);
 			print_array(array, size);
 		}
 
 
 	}
-	return (check);
+	return (present);
 }
 
 /**
- * swap- swap two elements in array
- * @low: int
- * @high: int
+ * hoare_sort- using this function recursively to call partitioner
+ * @array: int
+ * @start: int
+ * @end: int
+ * @size: size_t
  * Return: always 0
  */
 
-
-void swap(int *low, int *high)
+void hoare_sort(int *array, int start, int end, size_t size)
 {
-	int temp;
 
-	temp = *low;
-	*low = *high;
-	*high = temp;
+	int pivot;
+
+	if (start < end)
+	{
+		pivot = hoare_partition(array, start, end, size);
+		hoare_sort(array, start, pivot - 1, size);
+		hoare_sort(array, pivot, end, size);
+
+	}
+
+
 }
-
-
-
